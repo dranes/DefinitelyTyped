@@ -20,3 +20,21 @@ const helloChannel = App.cable.subscriptions.create('NetworkChannel', {
 }) as HelloChannel;
 
 helloChannel.hello('World');
+
+
+const anotherChannel = App.cable.subscriptions.create({channel: 'AnotherChannel', room: 'two'}, {
+  connected(): void {
+    console.log('connected');
+  },
+  disconnected(): void {
+    console.log('disconnected');
+  },
+  received(obj: Object): void {
+    console.log(obj);
+  },
+  hello(world: string, name: string = 'John Doe'): void {
+    console.log(`Hello, ${world}! name[${name}]`);
+  }
+}) as HelloChannel;
+
+anotherChannel.hello('World');
